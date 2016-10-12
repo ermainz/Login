@@ -1,3 +1,4 @@
-$ express login
+express login
 
-$ DEBUG=myapp:* npm start
+DEBUG=myapp:* npm start
+ng serve
