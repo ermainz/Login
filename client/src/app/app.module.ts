@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { AppComponent } from './app.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routing';
 
@@ -13,7 +13,7 @@ import { routing } from './app.routing';
   declarations: [
     AppNavComponent,
     AppComponent,
-    SignInComponent,
+    LogInFormComponent,
     MainComponent
   ],
   imports: [
