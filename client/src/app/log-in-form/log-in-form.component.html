@@ -1,13 +1,13 @@
 <div class="container">
-  <form>
+  <form (ngSubmit)="submit()">
     <div class="form-group row">
       <label for="email">Email</label>
-      <input type="text" id="email" class="form-control" placeholder="Enter your email">
+      <input type="text" id="email" class="form-control" placeholder="Enter your email" [(ngModel)]="model.email" name="email">
     </div>
 
     <div class="form-group row">
       <label for="password">Password</label>
-      <input type="password" id="password" class="form-control" placeholder="Enter a password">
+      <input type="password" id="password" class="form-control" placeholder="Enter a password" [(ngModel)]="model.password" name="password">
     </div>
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
