@@ -1,10 +1,10 @@
 var request = require('supertest');
 var app = require('../app');
 
-describe('Requests to /api/users', function() {
+describe('Requests to /api/user', function() {
   it('returns a 200 status code', function(done) {
     request(app)
-    .get('/api/users')
+    .get('/api/user')
     .expect(200)
     .end(function(error) {
       if (error) throw error;
@@ -13,9 +13,9 @@ describe('Requests to /api/users', function() {
   });
   it('returns fake response', function(done) {
     request(app)
-    .get('/api/users')
+    .get('/api/user')
     .expect(200)
-    .expect('users response', done);
+    .expect('user response', done);
   });
   // it('responds with json', function(done) {
   //   request(app)
