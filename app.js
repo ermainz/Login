@@ -5,9 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var config = require('./config/config');
+var mongoose = require('mongoose');
+mongoose.connect(config.database);
+
 var api = require('./routes/api');
 
 var app = express();
+app.set('superSecret', config.secret);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
