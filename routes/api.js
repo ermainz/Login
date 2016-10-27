@@ -8,9 +8,11 @@ var authenticate = require('./authenticate');
 
 // unauthenticated routes
 router.get('/', function(req, res, next) {
-  res.send('API response');
+  res.send('API Response');
 });
 router.use('/authenticate', authenticate);
+
+router.use('/unauth-user', user);
 
 // authenticated routes
 router.use(function(req, res, next) {

@@ -1,4 +1,6 @@
 module.exports = {
   'secret': 'ilovescotchyscotch',
-  'database': 'mongodb://localhost:27017/login'
+  'database': {
+    'dev': 'mongodb://mongo:27017/login'
+  }
 };

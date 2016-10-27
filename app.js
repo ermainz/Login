@@ -1,3 +1,7 @@
+var debug = require('debug')('login:server');
+
+debug("Found env=" + process.env.ENV);
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,13 +10,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var config = require('./config/config');
-var mongoose = require('mongoose');
-mongoose.connect(config.database);
-
+var db = require('./db/db');
 var api = require('./routes/api');
 
 var app = express();
 app.set('superSecret', config.secret);
+
+db.connect();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -38,7 +42,8 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.json({
+      error: 'error',
       message: err.message,
       error: err
     });
@@ -49,7 +54,8 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.json({
+    error: 'error',
     message: err.message,
     error: {}
   });
