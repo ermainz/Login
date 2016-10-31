@@ -1,12 +1,20 @@
 version: "2"
 services:
-  web:
+  api:
     environment:
       ENV: development
       DEBUG: "login:server"
     links:
       - mongo
     command: npm run watch
+  client:
+    build: ./client
+    volumes:
+      - ./client/dist:/dist
+    ports:
+      - "80:80"
+    links:
+      - api
   mongo:
     image: mongo
     ports:
