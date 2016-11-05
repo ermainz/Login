@@ -1,5 +1,16 @@
 version: "2"
 services:
+  client:
+    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.ng
+    volumes:
+      - ./client:/client
+    ports:
+      - "4200:4200"
+    links:
+      - api
   api:
     environment:
       ENV: development
@@ -7,14 +18,6 @@ services:
     links:
       - mongo
     command: npm run watch
-  client:
-    build: ./client
-    volumes:
-      - ./client/dist:/dist
-    ports:
-      - "80:80"
-    links:
-      - api
   mongo:
     image: mongo
     ports:

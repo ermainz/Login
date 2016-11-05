@@ -4,7 +4,7 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "watch": "ng build --watch true --output-path dist/",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
