@@ -1,0 +1,31 @@
+version: "2"
+services:
+  client:
+    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.nginx
+    volumes:
+      - ./client/dist:/dist
+    ports:
+      - "80:80"
+    links:
+      - api
+  api:
+    environment:
+      ENV: development
+      DEBUG: "login:server"
+    links:
+      - mongo
+    command: npm run watch
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes_from:
+      - mongodata
+  mongodata:
+    image: tianon/true
+    volumes:
+      - /data/db
+    # command: echo 'Data Container for Auth_MongoDB'
