@@ -1,14 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors');
 
 var jwt = require('jsonwebtoken');
 
 var user = require('./user');
 var authenticate = require('./authenticate');
 
+router.use(cors());
+
 // unauthenticated routes
 router.get('/', function(req, res, next) {
-  res.send('API Response');
+  res.json({ message: 'API Response'})
 });
 router.use('/authenticate', authenticate);
 

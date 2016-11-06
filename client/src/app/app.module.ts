@@ -9,6 +9,8 @@ import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routing';
 
+import { AuthenticationService } from './services/authentication.service';
+
 @NgModule({
   declarations: [
     AppNavComponent,
@@ -22,7 +24,9 @@ import { routing } from './app.routing';
     HttpModule,
     routing
   ],
-  providers: [],
+  providers: [
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
