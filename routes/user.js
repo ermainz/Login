@@ -10,20 +10,4 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/setup', function(req, res) {
-  // create a sample user
-  var nick = new User({ 
-    name: 'Nick Cerminara', 
-    password: 'password'
-  });
-
-  // save the sample user
-  nick.save(function(err) {
-    if (err) throw err;
-
-    console.log('User saved successfully');
-    res.json({ success: true });
-  });
-});
-
 module.exports = router;

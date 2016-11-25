@@ -11,7 +11,7 @@ router.use(cors());
 
 // unauthenticated routes
 router.get('/', function(req, res, next) {
-  res.json({ message: 'API Response'})
+  res.json({ message: 'Login API Response'})
 });
 router.use('/authenticate', authenticate);
 
