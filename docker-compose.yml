@@ -9,3 +9,7 @@ services:
     environment:
       ENV: production
     command: npm start
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

@@ -19,9 +19,6 @@ services:
       - mongo
     command: npm run watch
   mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
     volumes_from:
       - mongodata
   mongodata:
