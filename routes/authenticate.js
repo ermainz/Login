@@ -5,6 +5,9 @@ var debug = require('debug')('login:server');
 var jwt = require('jsonwebtoken');
 var User = require('../models/user');
 
+const authFailedMessage = 'Authentication failed.';
+const authSuccessMessage = 'Success!';
+
 router.post('/register', function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
@@ -27,17 +30,17 @@ router.post('/', function(req, res) {
   }, function(err, user) {
     if (err) throw err;
     if (!user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.'});
+      res.json({ success: false, message: authFailedMessage});
     } else if (user) {
       if (user.password != req.body.password) {
-        res.json({ success: false, message: 'Authentication failed. Wrong password.'});
+        res.json({ success: false, message: authFailedMessage});
       } else {
         var token = jwt.sign(user, req.app.get('superSecret'), {
           expiresIn: '1h'
         });
         res.json({
           success: true,
-          message: 'Success!',
+          message: authSuccessMessage,
           token: token
         })
       }
