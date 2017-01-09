@@ -6,7 +6,7 @@ describe('Requests to /api/user', function() {
   it('returns 403 forbidden if unauthenticated', function(done) {
     request(app)
     .get('/api/user')
-    .expect(403, done);
+    .expect(401, done);
   });
   // it('returns a 200 status code', function(done) {
   //   request(app)

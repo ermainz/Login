@@ -14,7 +14,7 @@ var db = require('./db/db');
 var api = require('./routes/api');
 
 var app = express();
-app.set('superSecret', config.secret);
+app.set('superSecret', config.jwtSecret);
 
 db.connect();
 

@@ -25,27 +25,29 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  User.findOne({
-    email: req.body.email
-  }, function(err, user) {
-    if (err) throw err;
-    if (!user) {
-      res.json({ success: false, message: authFailedMessage});
-    } else if (user) {
-      if (user.password != req.body.password) {
-        res.json({ success: false, message: authFailedMessage});
+  var {email, password} = req.body;
+  if (!email || !password) {
+    res.json({ success: false, message: 'Must provide email and password.' });
+  } else {
+    User.findOne({ email }, function(err, user) {
+      if (err) throw err;
+      if (!user) {
+        res.json({ success: false, message: authFailedMessage });
       } else {
-        var token = jwt.sign(user, req.app.get('superSecret'), {
+        var payload = {
+          id: user.id
+        };
+        var token = jwt.sign(payload, req.app.get('superSecret'), {
           expiresIn: '1h'
         });
         res.json({
           success: true,
           message: authSuccessMessage,
           token: token
-        })
+        });
       }
-    }
-  });
+    });
+  }
 });
 
 module.exports = router;
