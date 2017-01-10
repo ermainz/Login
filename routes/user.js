@@ -10,4 +10,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/whoami', function(req, res, next) {
+});
+
 module.exports = router;
