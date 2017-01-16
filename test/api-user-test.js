@@ -1,9 +1,10 @@
 var request = require('supertest');
 var app = require('../app');
+var User = require('../models/user');
 
 describe('Requests to /api/user', function() {
 
-  it('returns 403 forbidden if unauthenticated', function(done) {
+  it('returns 401 forbidden if unauthenticated', function(done) {
     request(app)
     .get('/api/user')
     .expect(401, done);
@@ -16,12 +17,6 @@ describe('Requests to /api/user', function() {
   //     if (error) throw error;
   //     done();
   //   });
-  // });
-  // it('returns fake response', function(done) {
-  //   request(app)
-  //   .get('/api/user')
-  //   .expect(200)
-  //   .expect('user response', done);
   // });
   // it('responds with json', function(done) {
   //   request(app)

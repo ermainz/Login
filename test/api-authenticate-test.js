@@ -37,4 +37,30 @@ describe('Requests to /api/authenticate', function() {
       }).end(done);
     });
   });
+
+  it('returns 200 status with success true when registering new user', function(done) {
+    var email = 'anothertestemail@example.com';
+    var password = 'abcd1234';
+
+    User.findOne({ email }, function(err, user) {
+      expect(user).to.equal(null);
+      request(app)
+      .post('/api/authenticate/register')
+      .send({ email, password })
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .expect(function(resp) {
+        var body = resp.body;
+        expect(body.success).to.equal(true);
+      })
+      .end(function() {
+        User.findOne({ email }).exec()
+        .then(function(user) {
+          expect(user).to.have.property('email');
+          expect(user).to.have.property('password');
+          expect(user.email).to.equal(email);
+        }).then(done).catch(done);
+      });
+    });
+  });
 });
