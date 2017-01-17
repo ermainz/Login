@@ -13,10 +13,7 @@ var params = {
 
 module.exports = function() {
   var strategy = new JwtStrategy(params, function(payload, done) {
-    var user = User.findOne({
-      _id: ObjectId(payload.id)
-    }, function(err, user) {
-      if (err) throw err;
+    User.findById(payload.id).exec().then(user => {
       if (user) {
         return done(null, {
           id: user.id
