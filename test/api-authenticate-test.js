@@ -1,4 +1,4 @@
-var request = require('supertest');
+var request = require('supertest-as-promised');
 var expect = require('chai').expect;
 
 var app = require('../app');
@@ -22,9 +22,7 @@ describe('Requests to /api/authenticate', function() {
     var email = 'testemail@example.com';
     var password = 'abcd1234';
     var user = new User({email, password});
-    user.save(function(err) {
-      if (err) throw err;
-
+    user.save().then(() => {
       request(app)
       .post('/api/authenticate')
       .send({ email, password })
@@ -35,32 +33,31 @@ describe('Requests to /api/authenticate', function() {
         expect(body.success).to.equal(true);
         expect(body).to.have.property('token');
       }).end(done);
-    });
+    }).catch(done);
   });
 
   it('returns 200 status with success true when registering new user', function(done) {
     var email = 'anothertestemail@example.com';
     var password = 'abcd1234';
 
-    User.findOne({ email }, function(err, user) {
+    User.findOne({ email }).exec().then(user => {
       expect(user).to.equal(null);
       request(app)
       .post('/api/authenticate/register')
       .send({ email, password })
       .set('Content-Type', 'application/json')
       .expect(200)
-      .expect(function(resp) {
+      .expect(resp => {
         var body = resp.body;
         expect(body.success).to.equal(true);
       })
-      .end(function() {
-        User.findOne({ email }).exec()
-        .then(function(user) {
+      .end(() => {
+        User.findOne({ email }).exec().then(user => {
           expect(user).to.have.property('email');
           expect(user).to.have.property('password');
           expect(user.email).to.equal(email);
         }).then(done).catch(done);
       });
-    });
+    }).catch(done);
   });
 });

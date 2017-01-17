@@ -1,6 +1,9 @@
-var request = require('supertest');
+var request = require('supertest-as-promised');
+var expect = require('chai').expect;
+
 var app = require('../app');
 var User = require('../models/user');
+var testUtils = require('../test/utils/test-utilities')(app);
 
 describe('Requests to /api/user', function() {
 
@@ -9,20 +12,22 @@ describe('Requests to /api/user', function() {
     .get('/api/user')
     .expect(401, done);
   });
-  // it('returns a 200 status code', function(done) {
-  //   request(app)
-  //   .get('/api/user')
-  //   .expect(200)
-  //   .end(function(error) {
-  //     if (error) throw error;
-  //     done();
-  //   });
-  // });
-  // it('responds with json', function(done) {
-  //   request(app)
-  //   .get('/api/user')
-  //   .set('Accept', 'application/json')
-  //   .expect('Content-Type', /json/)
-  //   .expect(200, done);
-  // });
+
+  it('returns list of users when authenticated', function(done) {
+    var email = 'testusertoauth@example.com';
+    var password = 'abcd1234';
+    var user = new User({email, password});
+    user.save()
+    .then(() => testUtils.withAuth(email, password))
+    .then(jwt => {
+      request(app)
+      .get('/api/user')
+      .set('Authorization', 'JWT ' + jwt)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(function(resp) {
+        expect(resp.body.length).to.equal(3);
+      }).end(done);
+    });
+  });
 });
