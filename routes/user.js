@@ -10,4 +10,10 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/whoami', function(req, res, next) {
+  User.findById(req.user.id).exec().then(user => {
+    res.json(user);
+  })
+});
+
 module.exports = router;

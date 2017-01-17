@@ -30,4 +30,23 @@ describe('Requests to /api/user', function() {
       }).end(done);
     });
   });
+
+  it('returns current user when authenticated', function(done) {
+    var email = 'testwhoamiuser@example.com';
+    var password = 'qwerty';
+    var user = new User({ email, password });
+    user.save()
+    .then(() => testUtils.withAuth(email, password))
+    .then(jwt => {
+      request(app)
+      .get('/api/user/whoami')
+      .set('Authorization', 'JWT ' + jwt)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(function(resp) {
+        expect(resp.body.email).to.equal(email);
+        expect(resp.body.password).to.equal(password);
+      }).end(done);
+    });
+  });
 });
