@@ -36,6 +36,27 @@ describe('Requests to /api/authenticate', function() {
     }).catch(done);
   });
 
+  it('returns 403 status for known user with incorrect password', function(done) {
+    var email = 'testemail@example.com';
+    var password = 'correct-password';
+    var incorrectPassword = password + '-incorrect';
+    var user = new User({email, password});
+    user.save().then(() => {
+
+      request(app)
+      .post('/api/authenticate')
+      .send({ email, password: incorrectPassword })
+      .set('Content-Type', 'application/json')
+      .expect(200)
+      .expect(function(resp) {
+        var body = resp.body;
+        expect(body.success).to.equal(false);
+        expect(body).not.to.have.property('token');
+      }).end(done);
+
+    }).catch(done);
+  });
+
   it('returns 200 status with success true when registering new user', function(done) {
     var email = 'anothertestemail@example.com';
     var password = 'abcd1234';

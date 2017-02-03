@@ -53,7 +53,7 @@ describe('Requests to /api/user', function() {
       .expect('Content-Type', /json/)
       .expect(function(resp) {
         expect(resp.body.email).to.equal(email);
-        expect(resp.body.password).to.equal(password);
+        expect(resp.body).not.to.have.property('password');
       }).end(done);
     });
   });
