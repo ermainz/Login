@@ -6,11 +6,11 @@ var jwt = require('jsonwebtoken');
 
 var user = require('./user');
 var authenticate = require('./authenticate');
-var auth = require('../services/authentication-service')();
+var authenticationService = require('../services/authentication-service')();
 
 router.use(cors());
 
-router.use(auth.initialize());
+router.use(authenticationService.initialize());
 
 // unauthenticated routes
 router.get('/', function(req, res, next) {
@@ -20,7 +20,7 @@ router.use('/authenticate', authenticate);
 
 router.use('/unauth-user', user);
 
-router.use(auth.authenticate());
+router.use(authenticationService.authenticate());
 
 router.use('/user', user);
 

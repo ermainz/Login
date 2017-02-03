@@ -29,28 +29,26 @@ router.post('/', function(req, res) {
   if (!email || !password) {
     res.json({ success: false, message: 'Must provide email and password.' });
   } else {
-    User.findOne({ email }).select('+password +passwordSalt').exec().then(user => {
+    User.authenticate(email, password, function(err, user) {
+      if (err) {
+        throw err;
+      }
+
       if (!user) {
         res.json({ success: false, message: authFailedMessage });
       } else {
-        if (password != user.password) {
-          res.json({ success: false, message: authFailedMessage });
-        } else {
-          var payload = {
-            id: user.id
-          };
-          var token = jwt.sign(payload, req.app.get('superSecret'), {
-            expiresIn: '1h'
-          });
-          res.json({
-            success: true,
-            message: authSuccessMessage,
-            token: token
-          });
-        }
+        var payload = {
+          id: user.id
+        };
+        var token = jwt.sign(payload, req.app.get('superSecret'), {
+          expiresIn: '1h'
+        });
+        res.json({
+          success: true,
+          message: authSuccessMessage,
+          token: token
+        });
       }
-    }).catch(err => {
-      throw err;
     });
   }
 });
