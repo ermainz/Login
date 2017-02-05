@@ -33,17 +33,12 @@ function generateNewSalt() {
   });
 };
 
-function hashNewPassword(password, callback) {
-  return generateNewSalt().then(salt => {
-    return hashPassword(password, salt).then(hashedPassword => {
-      return { hashedPassword, salt };
-    });
-  }).then( saltAndHash => {
-    var { hashedPassword, salt } = saltAndHash;
-    callback(null, hashedPassword, salt);
-  }).catch(err => {
-    callback(err);
-  });
+function hashNewPassword(password) {
+  return generateNewSalt().then(newSalt => {
+    return hashPassword(password, newSalt).then(hashedPassword => {
+      return { hashedPassword, newSalt };
+    })
+  })
 }
 
 function verifyPassword(candidatePassword, userPassword, userSalt, callback) {

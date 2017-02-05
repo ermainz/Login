@@ -46,12 +46,12 @@ UserSchema.statics.authenticate = function(email, candidatePassword, callback) {
 UserSchema.pre('save', function(next) {
   const user = this;
   if (!user.isModified('password')) return next();
-  passwordUtil.hashNewPassword(user.password, function(err, hashedPassword, newSalt) {
-    if (err) return next(err);
+  passwordUtil.hashNewPassword(user.password).then(saltAndHash => {
+    var { hashedPassword, newSalt } = saltAndHash;
     user.password = hashedPassword;
     user.passwordSalt = newSalt;
     next();
-  });
+  }).catch(err => next(err));
 });
 
 module.exports = mongoose.model('User', UserSchema);

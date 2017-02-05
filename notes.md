@@ -21,3 +21,4 @@ https://hharnisc.github.io/2016/06/19/integration-testing-with-docker-compose.ht
 
 Password salt and hash
 http://blog.robertonodi.me/node-authentication-series-email-and-password/
+http://blog.slatepeak.com/refactoring-a-basic-authenticated-api-with-node-express-and-mongo/
