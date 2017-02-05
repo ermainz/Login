@@ -15,3 +15,9 @@ show collections # who all collections, should list 'users'$
 db.users.find() # list all users$
 exit
 
+# Links
+Script for integration testing.
+https://hharnisc.github.io/2016/06/19/integration-testing-with-docker-compose.html
+
+Password salt and hash
+http://blog.robertonodi.me/node-authentication-series-email-and-password/

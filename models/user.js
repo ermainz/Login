@@ -1,12 +1,7 @@
 var mongoose = require('../db/mongoose');
 var Schema = mongoose.Schema;
 
-var passwordUtil = {
-  verifyPassword: function(candidatePassword, userPassword, userSalt, callback) {
-    var result = candidatePassword === userPassword;
-    callback(null, result);
-  }
-};
+var passwordUtil = require('../util/password-util');
 
 var UserSchema = new Schema({
   email: {
@@ -47,5 +42,16 @@ UserSchema.statics.authenticate = function(email, candidatePassword, callback) {
     }
   }).catch(err => callback(err, null));
 };
+
+UserSchema.pre('save', function(next) {
+  const user = this;
+  if (!user.isModified('password')) return next();
+  passwordUtil.hashPassword(user.password, function(err, hashedPassword, newSalt) {
+    if (err) return next(err);
+    user.password = hashedPassword;
+    user.passwordSalt = newSalt;
+    next();
+  });
+});
 
 module.exports = mongoose.model('User', UserSchema);

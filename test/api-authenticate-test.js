@@ -77,7 +77,7 @@ describe('Requests to /api/authenticate', function() {
           expect(user).to.have.property('email');
           expect(user).to.have.property('password');
           expect(user.email).to.equal(email);
-          expect(user.password).to.equal(password);
+          expect(user.password).not.to.equal(password);
         }).then(done).catch(done);
       });
     }).catch(done);

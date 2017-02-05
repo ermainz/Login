@@ -21,7 +21,7 @@ module.exports = function() {
       } else {
         return done(new Error('User not found'), null);
       }
-    });
+    }).catch(err => done(err, null))
   });
 
   passport.use(strategy);

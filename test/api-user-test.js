@@ -39,7 +39,7 @@ describe('Requests to /api/user', function() {
     });
   });
 
-  it('returns current user when authenticated', function(done) {
+  it('whoami returns current user when authenticated', function(done) {
     var email = 'testwhoamiuser@example.com';
     var password = 'qwerty';
     var user = new User({ email, password });
