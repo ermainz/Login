@@ -7,13 +7,16 @@ var DIGEST = 'sha256';
 
 var crypto = require('crypto');
 
-function hashPassword(password, salt, callback) {
-  var len = LEN / 2;
-  crypto.pbkdf2(password, salt, ITERATIONS, len, DIGEST, function(err, derivedKey) {
-    if (err) {
-      return callback(err);
-    }
-    return callback(null, derivedKey.toString('hex'));
+function hashPassword(password, salt) {
+  return new Promise((resolve, reject) => {
+    var len = LEN / 2;
+    crypto.pbkdf2(password, salt, ITERATIONS, len, DIGEST, function(err, derivedKey) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(derivedKey.toString('hex'));
+      }
+    });
   });
 }
 
@@ -25,23 +28,20 @@ function hashNewPassword(password, callback) {
 
     var salt = newSalt.toString('hex');
 
-    hashPassword(password, salt, (err, hashedPassword) => {
-      if (err) {
-        return callback(err);
-      }
+    hashPassword(password, salt).then(hashedPassword => {
       callback(null, hashedPassword, salt);
+    }).catch(err => {
+      callback(err);
     });
   });
 }
 
 function verifyPassword(candidatePassword, userPassword, userSalt, callback) {
-  hashPassword(candidatePassword, userSalt, (err, hashedCandidatePassword, newSalt)  => {
-    if (err) {
-      callback(err, null);
-    } else {
-      var result = hashedCandidatePassword === userPassword;
-      callback(null, result);
-    }
+  hashPassword(candidatePassword, userSalt).then(hashedCandidatePassword => {
+    var result = hashedCandidatePassword === userPassword;
+    callback(null, result);
+  }).catch(err => {
+    callback(err, null);
   });
 }
 
