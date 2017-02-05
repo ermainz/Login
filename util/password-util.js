@@ -20,19 +20,29 @@ function hashPassword(password, salt) {
   });
 }
 
-function hashNewPassword(password, callback) {
-  crypto.randomBytes(SALT_LEN / 2, function(err, newSalt) {
-    if (err) {
-      return callback(err);
-    }
-
-    var salt = newSalt.toString('hex');
-
-    hashPassword(password, salt).then(hashedPassword => {
-      callback(null, hashedPassword, salt);
-    }).catch(err => {
-      callback(err);
+function generateNewSalt() {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(SALT_LEN / 2, function(err, newSalt) {
+      if (err) {
+        reject(err);
+      } else {
+        var salt = newSalt.toString('hex');
+        resolve(salt);
+      }
     });
+  });
+};
+
+function hashNewPassword(password, callback) {
+  return generateNewSalt().then(salt => {
+    return hashPassword(password, salt).then(hashedPassword => {
+      return { hashedPassword, salt };
+    });
+  }).then( saltAndHash => {
+    var { hashedPassword, salt } = saltAndHash;
+    callback(null, hashedPassword, salt);
+  }).catch(err => {
+    callback(err);
   });
 }
 
