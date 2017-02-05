@@ -46,7 +46,7 @@ UserSchema.statics.authenticate = function(email, candidatePassword, callback) {
 UserSchema.pre('save', function(next) {
   const user = this;
   if (!user.isModified('password')) return next();
-  passwordUtil.hashPassword(user.password, function(err, hashedPassword, newSalt) {
+  passwordUtil.hashNewPassword(user.password, function(err, hashedPassword, newSalt) {
     if (err) return next(err);
     user.password = hashedPassword;
     user.passwordSalt = newSalt;
