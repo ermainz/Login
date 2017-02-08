@@ -4,13 +4,13 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class AuthenticationService {
+export class ExampleService {
   // private BASE_URL = 'http://api:3000/api';
   private BASE_URL = 'http://localhost:3000/api';
 
   constructor (private http: Http) {}
 
-  getAuth (): Observable<string> {
+  getExampleResp (): Observable<string> {
     return this.http.get(this.BASE_URL)
                     .map(this.extractData)
                     .catch(this.handleError);

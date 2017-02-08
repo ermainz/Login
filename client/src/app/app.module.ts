@@ -9,7 +9,7 @@ import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routing';
 
-import { AuthenticationService } from './services/authentication.service';
+// import { ExampleService } from './services/example.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { AuthenticationService } from './services/authentication.service';
     routing
   ],
   providers: [
-    AuthenticationService
+    // ExampleService
   ],
   bootstrap: [AppComponent]
 })
