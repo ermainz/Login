@@ -12,8 +12,8 @@ export class AppNavComponent {
 
   public ngOnInit() {
     this.closeModal = () => {
-      console.log('close the modal!')
-      $('#loginModal').modal('hide')
+      console.log('close the modal!');
+      $('#loginModal').modal('hide');
     };
   }
 
