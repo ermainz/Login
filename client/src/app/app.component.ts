@@ -10,7 +10,7 @@ import './rxjs-operators';
   styleUrls: ['./app.component.css'],
   providers: [
     ExampleService
-  ],
+  ]
 })
 export class AppComponent {
 
