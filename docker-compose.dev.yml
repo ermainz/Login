@@ -14,7 +14,7 @@ services:
       - api
   api:
     volumes:
-      - /app/node_modules
+      - /api/node_modules
     environment:
       ENV: development
       DEBUG: "login:server"

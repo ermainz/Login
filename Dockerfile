@@ -1,12 +1,12 @@
 FROM node:6.9.1
 
-RUN mkdir /app
-WORKDIR /app
+RUN mkdir /api
+WORKDIR /api
 
-COPY package.json /app
+COPY package.json /api
 RUN npm install
 
-COPY . /app
+COPY . /api
 
 EXPOSE 3000
 
