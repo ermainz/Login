@@ -1,6 +1,4 @@
 version: "2"
-volumes:
-  node_modules:
 services:
   client:
     build: ./client
@@ -9,12 +7,14 @@ services:
       dockerfile: Dockerfile.ng
     volumes:
       - ./client:/client
-      - node_modules:/client/node_modules
+      - /client/node_modules
     ports:
       - "4200:4200"
     links:
       - api
   api:
+    volumes:
+      - /app/node_modules
     environment:
       ENV: development
       DEBUG: "login:server"
