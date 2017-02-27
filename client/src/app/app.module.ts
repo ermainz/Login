@@ -6,16 +6,18 @@ import { HttpModule } from '@angular/http';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { AppComponent } from './app.component';
 import { LogInFormComponent } from './log-in-form/log-in-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routing';
-
-// import { ExampleService } from './services/example.service';
 
 @NgModule({
   declarations: [
     AppNavComponent,
     AppComponent,
     LogInFormComponent,
+    RegisterFormComponent,
+    LoginRegisterComponent,
     MainComponent
   ],
   imports: [

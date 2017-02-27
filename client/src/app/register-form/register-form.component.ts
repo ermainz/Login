@@ -7,12 +7,12 @@ import { LogInCredentials } from '../models/log-in-credentials';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
-  selector: 'log-in-form',
-  templateUrl: './log-in-form.component.html',
-  styleUrls: ['./log-in-form.component.scss'],
+  selector: 'register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss'],
   providers: [ AuthenticationService ]
 })
-export class LogInFormComponent {
+export class RegisterFormComponent {
 
   @Input()
   public onSubmit: Function;

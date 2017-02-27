@@ -8,13 +8,8 @@ declare var $:any;
   styleUrls: ['./app-nav.component.css']
 })
 export class AppNavComponent {
-  public closeModal: Function;
 
   public ngOnInit() {
-    this.closeModal = () => {
-      console.log('close the modal!');
-      $('#loginModal').modal('hide');
-    };
   }
 
 }
