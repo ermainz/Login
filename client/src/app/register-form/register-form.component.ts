@@ -9,13 +9,12 @@ import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'register-form',
   templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss'],
-  providers: [ AuthenticationService ]
+  styleUrls: ['./register-form.component.scss']
 })
 export class RegisterFormComponent {
 
   @Input()
-  public onSubmit: Function;
+  public onRegister: Function;
 
   authenticationService: AuthenticationService;
 
@@ -33,18 +32,18 @@ export class RegisterFormComponent {
 
   submit() {
     console.log("email=" + this.model.email + ", password=" + this.model.password);
-    this.authenticationService.authenticate(this.model.email, this.model.password).subscribe(
+    this.authenticationService.register(this.model.email, this.model.password).subscribe(
       success => {
         this.reset();
         if (success) {
-          console.log('Authentication successful');
-          this.onSubmit();
+          console.log('Registration successful');
         } else {
-          console.log('Authentication unsuccessful');
+          console.log('Registration unsuccessful');
           this.hideError = false;
           $('.alert').alert();
           // TODO pop up failed to log in notification
         }
+        this.onRegister(success);
       }, error => {
         console.log('Error authenticating');
       }

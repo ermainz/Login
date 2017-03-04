@@ -9,10 +9,21 @@
       </ul>
       <ul class="navbar-nav ">
         <li class="nav-item">
-          <a routerLink="/login" routerLinkActive="active" class="nav-link">Log In</a>
+          <div [ngSwitch]="isAuthenticated">
+            <a *ngSwitchCase="false"
+               routerLink="/login"
+               routerLinkActive="active"
+               class="nav-link">
+              Log In
+            </a>
+            <a *ngSwitchDefault
+               (click)="signOutClicked()"
+               class="nav-link">
+              Sign Out
+            </a>
+          </div>
         </li>
       </ul>
-      <!-- <a routerLink="/login" routerLinkActive="active" class="nav-link">Log In</a> -->
     </div>
   </div>
 </nav>

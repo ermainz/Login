@@ -9,22 +9,17 @@ import { AuthenticationService } from '../services/authentication.service';
 @Component({
   selector: 'log-in-form',
   templateUrl: './log-in-form.component.html',
-  styleUrls: ['./log-in-form.component.scss'],
-  providers: [ AuthenticationService ]
+  styleUrls: ['./log-in-form.component.scss']
 })
 export class LogInFormComponent {
 
   @Input()
-  public onSubmit: Function;
-
-  authenticationService: AuthenticationService;
+  public onLogin: Function;
 
   model: LogInCredentials;
   hideError : Boolean;
 
-  constructor(authenticationService: AuthenticationService) {
-    this.authenticationService = authenticationService;
-  }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.reset();
@@ -38,13 +33,13 @@ export class LogInFormComponent {
         this.reset();
         if (success) {
           console.log('Authentication successful');
-          this.onSubmit();
         } else {
           console.log('Authentication unsuccessful');
           this.hideError = false;
           $('.alert').alert();
           // TODO pop up failed to log in notification
         }
+        this.onLogin(success);
       }, error => {
         console.log('Error authenticating');
       }

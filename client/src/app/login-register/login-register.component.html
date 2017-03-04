@@ -1,10 +1,15 @@
-<div class="container">
-  <div class="row justify-content-around">
+<div class="container" [ngSwitch]="isAuthenticated">
+  <div class="row justify-content-around" *ngSwitchCase="false">
     <div class="col-5">
-      <log-in-form [onSubmit]="onLoginComplete"></log-in-form>
+      <log-in-form [onLogin]="onLogin"></log-in-form>
     </div>
     <div class="col-5">
-      <register-form [onSubmit]="onLoginComplete"></register-form>
+      <register-form [onRegister]="onRegister"></register-form>
+    </div>
+  </div>
+  <div *ngSwitchCase="true">
+    <div class="mt-3">
+      <p>Already Logged In</p>
     </div>
   </div>
 </div>

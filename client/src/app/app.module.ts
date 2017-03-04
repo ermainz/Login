@@ -11,6 +11,9 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 import { MainComponent } from './main/main.component';
 import { routing } from './app.routing';
 
+import { AuthenticationService } from './services/authentication.service';
+
+
 @NgModule({
   declarations: [
     AppNavComponent,
@@ -27,7 +30,7 @@ import { routing } from './app.routing';
     routing
   ],
   providers: [
-    // ExampleService
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
