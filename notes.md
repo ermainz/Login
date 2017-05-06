@@ -8,6 +8,9 @@ curl -X POST -H 'Content-Type: application/json' -d '{"email": "abcd", "password
 curl localhost:3000/api/user -H 'Content-Type: application/json' -H 'Authorization: JWT 
 
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm client /bin/bash
+## more examples
+docker-compose run --rm client ng init --skip-npm --name CliDemo
+docker-compose run --rm client npm install
 
 # MongoDB
 mongo$
