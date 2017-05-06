@@ -1,4 +1,4 @@
-FROM node:6.9.1
+FROM node:6.10.2
 
 RUN mkdir /client
 WORKDIR /client
@@ -7,7 +7,5 @@ COPY package.json /client
 RUN npm install
 
 COPY . /client
-
-CMD ["npm", "start"]
 
 EXPOSE 4200

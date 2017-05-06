@@ -1,6 +1,8 @@
 version: "2"
 services:
   api:
+    volumes:
+      - /api/node_modules
     environment:
       ENV: test
       DEBUG: "login:server"

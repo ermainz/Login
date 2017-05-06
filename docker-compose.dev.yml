@@ -1,7 +1,6 @@
 version: "2"
 services:
   client:
-    build: ./client
     build:
       context: ./client
       dockerfile: Dockerfile.ng
@@ -12,6 +11,7 @@ services:
       - "4200:4200"
     links:
       - api
+    command: npm start
   api:
     volumes:
       - /api/node_modules
