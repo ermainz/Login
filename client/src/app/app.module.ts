@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
+
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { AppComponent } from './app.component';
@@ -13,6 +15,9 @@ import { routing } from './app.routing';
 
 import { AuthenticationService } from './services/authentication.service';
 
+function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig(), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -30,6 +35,11 @@ import { AuthenticationService } from './services/authentication.service';
     routing
   ],
   providers: [
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    },
     AuthenticationService
   ],
   bootstrap: [AppComponent]

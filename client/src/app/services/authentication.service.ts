@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
+import { tokenNotExpired } from 'angular2-jwt';
+
 import { Observable } from 'rxjs/Observable';
+
+const TOKEN_KEY = 'id_token';
 
 @Injectable()
 export class AuthenticationService {
   private BASE_URL = 'http://localhost:3000/api';
-
-  private currentToken = null;
 
   constructor (private http: Http) {}
 
@@ -38,7 +40,7 @@ export class AuthenticationService {
         if (success) {
           console.log('Token=' + token);
           // TODO save token in cookie to attach to all requests
-          this.currentToken = token;
+          localStorage.setItem(TOKEN_KEY, token);
         } else {
           console.log('Failed to authenticate: ' + message);
         }
@@ -48,11 +50,12 @@ export class AuthenticationService {
   }
 
   signout() {
-    this.currentToken = null;
+    localStorage.removeItem(TOKEN_KEY);
   }
 
   isAuthenticated() {
-    return this.currentToken !== null;
+    let tokenIsValid = tokenNotExpired(TOKEN_KEY);
+    return tokenIsValid;
   }
 
   private extractData(res: Response) {
