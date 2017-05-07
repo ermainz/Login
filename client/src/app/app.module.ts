@@ -11,9 +11,11 @@ import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { MainComponent } from './main/main.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { routing } from './app.routing';
 
 import { AuthenticationService } from './services/authentication.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig(), http, options);
@@ -26,7 +28,8 @@ function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LogInFormComponent,
     RegisterFormComponent,
     LoginRegisterComponent,
-    MainComponent
+    MainComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
     },
-    AuthenticationService
+    AuthenticationService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

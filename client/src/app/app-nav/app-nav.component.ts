@@ -28,9 +28,10 @@ export class AppNavComponent {
   }
 
   signOutClicked() {
+    console.log('#signOutClicked');
     this.authenticationService.signout();
     this.isAuthenticated = false;
-    this.router.navigate(['home']);
+    this.router.navigateByUrl('/unauthorized');
   }
 
   updateIsAuthenticated = () => {
