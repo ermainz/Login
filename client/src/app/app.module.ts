@@ -16,9 +16,15 @@ import { routing } from './app.routing';
 
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { UserService } from './services/user.service';
+
+const TOKEN_KEY = 'id_token';
 
 function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig(), http, options);
+  return new AuthHttp(new AuthConfig({
+    tokenName: TOKEN_KEY,
+    headerPrefix: 'JWT'
+  }), http, options);
 }
 
 @NgModule({
@@ -44,7 +50,8 @@ function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     },
     AuthenticationService,
-    AuthGuard
+    AuthGuard,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
